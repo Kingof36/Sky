@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Sky of Lanterns — web game</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; overflow:hidden; background:#0b1026; font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif; }
+  #app { position:fixed; inset:0; }
+  #hud { position:fixed; inset:0; pointer-events:none; color:#fff; text-shadow:0 2px 8px rgba(0,0,0,.6); }
+  .panel { position:absolute; padding:10px 14px; background:rgba(12,18,45,.45); border:1px solid rgba(255,255,255,.14);
+           border-radius:14px; backdrop-filter: blur(8px); font-size:14px; }
+  #top-left { top:16px; left:16px; min-width:190px; }
+  #top-right { top:16px; right:16px; text-align:right; }
+  #hint { bottom:18px; left:50%; transform:translateX(-50%); text-align:center; font-size:13px; opacity:.85; }
+  #toast { top:50%; left:50%; transform:translate(-50%,-50%); font-size:18px; opacity:0; transition:opacity .4s; text-align:center; }
+  .bar { height:8px; border-radius:99px; background:rgba(255,255,255,.18); overflow:hidden; margin-top:6px; }
+  .bar > i { display:block; height:100%; border-radius:99px; background:linear-gradient(90deg,#ffd27a,#ffefc2); width:100%; }
+  #start { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:14px;
+           background:radial-gradient(circle at 50% 35%, #2a3570, #0b1026 70%); color:#fff; text-align:center; padding:24px; z-index:5; }
+  #start h1 { font-size:34px; margin:0; letter-spacing:.06em; font-weight:600; }
+  #start p { max-width:520px; opacity:.8; line-height:1.6; font-size:14px; margin:0; }
+  button { pointer-events:auto; cursor:pointer; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.1);
+           color:#fff; padding:12px 26px; border-radius:99px; font-size:15px; }
+  button:hover { background:rgba(255,255,255,.2); }
+  input { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); color:#fff; padding:10px 14px;
+          border-radius:10px; text-align:center; font-size:14px; }
+  #touch { position:fixed; inset:0; display:none; z-index:3; }
+  #stick { position:absolute; left:26px; bottom:26px; width:130px; height:130px; border-radius:50%;
+           background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); touch-action:none; }
+  #knob { position:absolute; left:40px; top:40px; width:50px; height:50px; border-radius:50%; background:rgba(255,255,255,.35); }
+  #fly { position:absolute; right:26px; bottom:36px; width:96px; height:96px; border-radius:50%;
+         background:rgba(255,210,122,.25); border:1px solid rgba(255,210,122,.5); color:#fff; font-size:13px;
+         display:flex; align-items:center; justify-content:center; pointer-events:auto; touch-action:none; }
+  @media (pointer:coarse) { #touch { display:block; } }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<div id="hud">
+  <div class="panel" id="top-left">
+    <div><b id="pname">Traveler</b></div>
+    <div style="margin-top:6px">🕯️ Nến: <b id="candles">0</b> &nbsp; ✨ Ánh sáng: <b id="wax">0</b></div>
+    <div>Năng lượng bay<div class="bar"><i id="energy"></i></div></div>
+  </div>
+  <div class="panel" id="top-right">
+    <div>Cổng đã mở: <b id="gates">0</b>/3</div>
+    <div style="margin-top:4px;opacity:.8">Người chơi online: <b id="online">1</b></div>
+  </div>
+  <div class="panel" id="hint">WASD / cần gạt để đi · Space (giữ) để bay · Chuột để xoay camera · E để thắp nến / mở cổng</div>
+  <div class="panel" id="toast"></div>
+</div>
+
+<div id="touch">
+  <div id="stick"><div id="knob"></div></div>
+  <div id="fly">BAY</div>
+</div>
+
+<div id="start">
+  <h1>SKY OF LANTERNS</h1>
+  <p>Bay giữa những hòn đảo mây, thu thập ánh sáng, thắp nến cho các tượng đài và mở ba cổng ánh sáng.
+     Nếu bạn cấu hình Apps Script, bạn sẽ thấy những người chơi khác cùng bay trong bản đồ.</p>
+  <input id="nameInput" maxlength="14" placeholder="Tên của bạn" />
+  <button id="startBtn">Bắt đầu hành trình</button>
+  <p style="font-size:12px;opacity:.55">Chuột sẽ bị khoá vào màn hình khi chơi — nhấn Esc để thoát.</p>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+<script type="module" src="./game.js"></script>
+</body>
+</html>
