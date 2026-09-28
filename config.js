@@ -1,6 +1,6 @@
 // Dán URL Web App của Google Apps Script vào đây (kết thúc bằng /exec).
 // Để trống "" thì game vẫn chơi được, chỉ mất phần nhiều người chơi + lưu tiến trình.
-export const API_URL = "";
+export const API_URL = "https://script.google.com/macros/s/AKfycby-VBN7pgpJd3AreNYMkkgkXYyYiq_b83okKvbJbBy9TLOisNthJC9dlLm3Y1aALdu1/exec";
 
 // Tên phòng/bản đồ chung cho những người chơi muốn gặp nhau.
 export const ROOM = "isle-of-dawn";
